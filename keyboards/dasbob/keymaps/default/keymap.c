@@ -6,21 +6,6 @@ enum dasbob_layers {
   _RAISE
 };
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LT(1, KC_BSPC):
-            return 125;
-        default:
-            return TAPPING_TERM;
-    }
-}
-const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
-    LAYOUT_split_3x5_3(
-        'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R',
-        'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R',
-        'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R',
-                  'X', 'X', 'X',  'X', 'X', 'X'
-    );
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      /*
@@ -41,28 +26,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_QWERTY] = LAYOUT_split_3x5_3(
         KC_Q,    KC_W,              KC_E,            KC_R,            KC_T,               KC_Y,         KC_U,              KC_I,              KC_O,           KC_P,
-        LCTL_T(KC_A),LALT_T(KC_S),  LGUI_T(KC_D),    LSFT_T(KC_F),    KC_G,               KC_H,         RSFT_T(KC_J),      RGUI_T(KC_K),      RALT_T(KC_L),   RCTL_T(KC_QUOT),
+        KC_A,    RALT_T(KC_S),      LCTL_T(KC_D),    LSFT_T(KC_F),    KC_G,               KC_H,         LSFT_T(KC_J),      LCTL_T(KC_K),      RALT_T(KC_L),   KC_SCLN,
         KC_Z,    KC_X,              KC_C,            KC_V,            KC_B,               KC_N,         KC_M,              KC_COMM,           KC_DOT,         KC_SLSH,
-                                    KC_NO,          LT(_LOWER,  KC_BSPC),              KC_ESC,          KC_ENTER,     LT(_RAISE,KC_SPACE),        KC_NO
+                                    KC_DEL,          KC_SPC,          MO(1),              MO(2),        KC_BSPC,           KC_ESC
     ),
 
     [_LOWER] = LAYOUT_split_3x5_3(
        KC_1,     KC_2,              KC_3,            KC_4,            KC_5,               KC_6,         KC_7,             KC_8,            KC_9,              KC_0,
-       KC_LCTL,  KC_LALT,           KC_LGUI,         KC_LSFT,           KC_NO,           KC_LEFT,      KC_DOWN,            KC_UP,        KC_RIGHT,           KC_SCLN,
-       KC_NO,    KC_NO,             KC_NO,          KC_NO,            KC_NO,             KC_NO,       KC_NO,             KC_NO,           KC_NO,           KC_NO,
-                                    KC_NO,         KC_NO,           KC_NO,              S(KC_TAB),       KC_TAB,          KC_NO
+       CK_RST,  RALT_T(XXXXXXX),   LCTL_T(XXXXXXX), LSFT_T(XXXXXXX), KC_PSCR,           KC_MINS,      LSFT_T(KC_EQL),   LCTL_T(KC_GRV),  RALT_T(KC_QUOT),    KC_BSLS,
+       CK_TOGG,  CK_UP,           CK_DOWN,         LCTL(KC_C),      LCTL(KC_V),         KC_TAB,      XXXXXXX,          XXXXXXX,         XXXXXXX,           XXXXXXX,
+                                    KC_TRNS,         KC_TRNS,         KC_TAB,             KC_ENT,       KC_TRNS,          KC_TRNS
     ),
 
     [_RAISE] = LAYOUT_split_3x5_3(
-        S(KC_1), S(KC_2),          S(KC_3),        KC_GRAVE,         KC_LBRC,          KC_RBRC,      KC_NO,              KC_NO,           KC_NO,            KC_NO,
-        S(KC_6),  KC_EQUAL,        S(KC_MINUS),    S(KC_4),       KC_LPRN,         KC_RPRN,      KC_TILDE,       S(KC_7),       S(KC_5),          KC_SCLN,
-        S(KC_8),  KC_MSTP,         KC_MINUS,       KC_PLUS,      S(KC_LBRC),    S(KC_RBRC),      KC_KP_1,          KC_NO,          KC_NO,           KC_NO,
-                                     KC_NO,       S(KC_SCLN),      S(KC_2),          KC_NO,         KC_NO,         KC_NO
+        KC_ESC,   KC_UP,           XXXXXXX,         XXXXXXX,         CK_TOGG,             KC_NUM_LOCK,  KC_KP_7,          KC_KP_8,         KC_KP_9,           KC_KP_MINUS,
+        KC_LEFT,  RALT_T(KC_DOWN), LCTL_T(KC_RGHT), LSFT_T(XXXXXXX), KC_LGUI,             XXXXXXX,      LSFT_T(KC_KP_4),  LCTL_T(KC_KP_5), RALT_T(KC_KP_6),   KC_KP_PLUS,
+        KC_MPRV,  KC_MSTP,         KC_MPLY,         KC_MNXT,         KC_PSCR,             XXXXXXX,      KC_KP_1,          KC_KP_2,         KC_KP_3,           KC_KP_0,
+                                   KC_TRNS,         KC_TRNS,         KC_TAB,              KC_ENT,       KC_TRNS,          KC_TRNS
     ),
 
 
 };
-
 #ifdef OLED_ENABLE
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_0; }
@@ -102,7 +86,7 @@ bool oled_task_user(void) {
         case _QWERTY:
         oled_set_cursor(12, 1);
             oled_write_P(PSTR("Default\n"), false);
-           break;
+            break;
         case _LOWER:
         oled_set_cursor(12, 1);
             oled_write_P(PSTR("Lower\n"), false);

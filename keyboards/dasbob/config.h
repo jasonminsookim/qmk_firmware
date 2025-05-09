@@ -52,7 +52,7 @@
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 100
 
 // Pick good defaults for enabling homerow modifiers
-#define TAPPING_TERM 225
+#define TAPPING_TERM 142
 #define TAPPING_TERM_PER_KEY
 #define CHORDAL_HOLD
 #define PERMISSIVE_HOLD
