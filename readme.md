@@ -1,3 +1,10 @@
+# Jason's Guide:
+```bash
+qmk compile -kb keebio/iris/rev4 -km kendra
+```
+
+- Flash both halves; order doesn't matter
+- Flash using the QMK Toolbox and Reset Button on the Back
 # Quantum Mechanical Keyboard Firmware
 
 [![Current Version](https://img.shields.io/github/tag/qmk/qmk_firmware.svg)](https://github.com/qmk/qmk_firmware/tags)
